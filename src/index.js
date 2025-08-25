@@ -5,6 +5,29 @@ const startButton = document.querySelector('#start');
 const score = document.querySelector('#score'); // Use querySelector() to get the score element
 const timerDisplay = document.querySelector('#timer'); // use querySelector() to get the timer element.
 
+const audioHit = new Audio("assets/hit.mp3");
+audioHit.preload = "auto"; // tell browser to fully load it
+const song = new Audio("assets/molesong.mp3");
+
+function playAudio(audioObject) {
+  audioObject.play();
+}
+
+function loopAudio(audioObject) {
+  audioObject.loop = true;
+  playAudio(audioObject);
+}
+
+function stopAudio(audioObject) {
+  audioObject.pause();
+  audioObject.currentTime = 0; // reset to start
+}
+
+function play() {
+  song.loop = true;
+  playAudio(song);
+}
+
 let time = 0;
 let timer;
 let lastHole = 0;
@@ -227,6 +250,10 @@ function startTimer() {
 */
 function whack(event) {
   // TODO: Write your code here.
+  audioHit.pause;
+  audioHit.currentTime = 0; // reset sound to start so it plays every time
+  audioHit.play();
+
   updateScore();
   return points;
 }
@@ -262,7 +289,7 @@ function setDuration(duration) {
 *
 */
 function stopGame(){
-  // stopAudio(song);  //optional
+  stopAudio(song);  //optional
   clearInterval(timer);
   return "game stopped";
 }
@@ -284,8 +311,9 @@ function stopGame(){
  * Note: Simply uncommenting `setDuration(10);` and `showUp();` is not enough. To make the game work, ensure all necessary functions listed above are called to initialize the score, timer, event listeners, and mole appearances. 
 */
 function startGame(){
+  play();
   clearScore();
-  stopGame();   //optional
+  // stopGame();   //optional
   setDuration(10);
   setEventListeners();
   startTimer();
